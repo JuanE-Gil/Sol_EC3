@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Windows.Forms;
 
 using EC3.Datos;
@@ -10,6 +12,10 @@ namespace EC3.Presentacion
     {
         private D_Ordenes Ordenes = new D_Ordenes();
         private int inputID = 0;
+
+        private D_Shippers Shippers = new D_Shippers(); // Instancia de la clase D_Shippers
+        private int ShipperId; // Variable para guardar el ShipperID seleccionado
+
         public Frm_ordenes() {
             InitializeComponent();
         }
@@ -29,6 +35,13 @@ namespace EC3.Presentacion
         }
 
         private void Listado_Ordenes() {
+
+            // Llenar el ComboBox con los nombres de los shippers
+            List<E_Shipper> shippers = D_Shippers.ObtenerShippers();
+            cmbPedido.DataSource = shippers;
+            cmbPedido.DisplayMember = "CompanyName";
+            cmbPedido.ValueMember = "ShipperID";
+
             dgvListado.DataSource = Ordenes.ListadoOrdenes();
             this.FormatoLista();
         }
@@ -38,35 +51,38 @@ namespace EC3.Presentacion
         }
 
         private void FormatoLista() {
-            dgvListado.Columns[0].Width = 100;
-            dgvListado.Columns[0].HeaderText = "OrdenId";
-            dgvListado.Columns[1].Width = 100;
-            dgvListado.Columns[1].HeaderText = "ClienteId";
-            dgvListado.Columns[2].Width = 100;
-            dgvListado.Columns[2].HeaderText = "EmpleadoId";
-            dgvListado.Columns[3].Width = 100;
-            dgvListado.Columns[3].HeaderText = "FechaOrden";
-            dgvListado.Columns[4].Width = 100;
-            dgvListado.Columns[4].HeaderText = "FechaRequerida";
-            dgvListado.Columns[5].Width = 100;
-            dgvListado.Columns[5].HeaderText = "FechaEnvio";
-            dgvListado.Columns[6].Width = 100;
-            dgvListado.Columns[6].HeaderText = "EnvioPedido";
-            dgvListado.Columns[7].Width = 100;
-            dgvListado.Columns[7].HeaderText = "Flete";
-            dgvListado.Columns[8].Width = 100;
-            dgvListado.Columns[8].HeaderText = "NombreEnvio";
-            dgvListado.Columns[9].Width = 100;
-            dgvListado.Columns[9].HeaderText = "DireccionEnvio";
-            dgvListado.Columns[10].Width = 100;
-            dgvListado.Columns[10].HeaderText = "CiudadEnvio";
-            dgvListado.Columns[11].Width = 100;
-            dgvListado.Columns[11].HeaderText = "RegionEnvio";
-            dgvListado.Columns[12].Width = 100;
-            dgvListado.Columns[12].HeaderText = "CodigoPostalEnvio";
-            dgvListado.Columns[13].Width = 100;
-            dgvListado.Columns[13].HeaderText = "PaisEnvio";
+            if (dgvListado.Columns.Count >= 14) {
+                dgvListado.Columns[0].HeaderText = "Orden Id";
+                dgvListado.Columns[0].Width = 75;
+                dgvListado.Columns[1].HeaderText = "Cliente Id";
+                dgvListado.Columns[1].Width = 100;
+                dgvListado.Columns[2].HeaderText = "Empleado Id";
+                dgvListado.Columns[2].Width = 100;
+                dgvListado.Columns[3].HeaderText = "Fecha Orden";
+                dgvListado.Columns[3].Width = 120;
+                dgvListado.Columns[4].HeaderText = "Fecha Requerida";
+                dgvListado.Columns[4].Width = 120;
+                dgvListado.Columns[5].HeaderText = "Fecha Envio";
+                dgvListado.Columns[5].Width = 120;
+                dgvListado.Columns[6].HeaderText = "Envio Pedido";
+                dgvListado.Columns[6].Width = 100;
+                dgvListado.Columns[7].HeaderText = "Flete";
+                dgvListado.Columns[7].Width = 50;
+                dgvListado.Columns[8].HeaderText = "Nombre Envio";
+                dgvListado.Columns[8].Width = 100;
+                dgvListado.Columns[9].HeaderText = "Direccion Envio";
+                dgvListado.Columns[9].Width = 110;
+                dgvListado.Columns[10].HeaderText = "Ciudad Envio";
+                dgvListado.Columns[10].Width = 100;
+                dgvListado.Columns[11].HeaderText = "Region Envio";
+                dgvListado.Columns[11].Width = 100;
+                dgvListado.Columns[12].HeaderText = "Codigo Postal";
+                dgvListado.Columns[12].Width = 100;
+                dgvListado.Columns[13].HeaderText = "Pais Envio";
+                dgvListado.Columns[13].Width = 100;
+            }
         }
+
 
         private void btnNuevo_Click(object sender, System.EventArgs e) {
             this.LimpiaTexto();
@@ -80,7 +96,7 @@ namespace EC3.Presentacion
             DateTime FechaOrden = Convert.ToDateTime(dtpFechaOrden.Value);
             DateTime FechaRequerida = Convert.ToDateTime(dtpFechaRequerida.Value);
             DateTime FechaEnvio = Convert.ToDateTime(dtpFechaEnvio.Value);
-            int EnvioPedido = Convert.ToInt32(txtEnvioPedido.Text);
+            int ShipperId = Convert.ToInt32(cmbPedido.SelectedValue);
             Decimal Flete = Convert.ToDecimal(txtFlete.Text);
             string NombreEnvio = txtNombreEnvio.Text;
             string DireccionEnvio = txtDireccion.Text;
@@ -89,12 +105,11 @@ namespace EC3.Presentacion
             string CodigoPostalEnvio = txtCodigoPostal.Text;
             string PaisEnvio = txtPais.Text;
 
-            E_Ordenes orden = new E_Ordenes(ClienteId, EmpleadoId, FechaOrden, FechaRequerida, FechaEnvio, EnvioPedido, Flete, NombreEnvio, DireccionEnvio, CiudadEnvio, RegionEnvio, CodigoPostalEnvio, PaisEnvio);
+            E_Ordenes orden = new E_Ordenes(ClienteId, EmpleadoId, FechaOrden, FechaRequerida, FechaEnvio, ShipperId, Flete, NombreEnvio, DireccionEnvio, CiudadEnvio, RegionEnvio, CodigoPostalEnvio, PaisEnvio);
 
             Ordenes.guardarOrden(orden);
             this.Listado_Ordenes();
             MessageBox.Show("!Nueva Orden registrada exitosamente", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            this.EstadoBotones(false);
             LimpiaTexto();
             this.EstadoTexto(false);
             this.EstadoBotones(true);
@@ -109,7 +124,7 @@ namespace EC3.Presentacion
         private void LimpiaTexto() {
             txtClienteId.Text = "";
             txtEmpleadoId.Text = "";
-            txtEnvioPedido.Text = "";
+            cmbPedido.SelectedIndex = 0;
             txtFlete.Text = "";
             txtNombreEnvio.Text = "";
             txtDireccion.Text = "";
@@ -122,7 +137,7 @@ namespace EC3.Presentacion
         private void EstadoTexto(bool lEstado) {
             txtClienteId.Enabled = lEstado;
             txtEmpleadoId.Enabled = lEstado;
-            txtEnvioPedido.Enabled = lEstado;
+            cmbPedido.Enabled = lEstado;
             txtFlete.Enabled = lEstado;
             txtNombreEnvio.Enabled = lEstado;
             txtDireccion.Enabled = lEstado;
@@ -151,7 +166,7 @@ namespace EC3.Presentacion
                     dtpFechaEnvio.Value = orden.FechaEnvio;
                     dtpFechaOrden.Value = orden.FechaOrden;
                     dtpFechaRequerida.Value = orden.FechaRequerida;
-                    txtEnvioPedido.Text = orden.EnvioPedido.ToString();
+                    cmbPedido.SelectedValue = orden.EnvioPedido;
                     txtFlete.Text = orden.Flete.ToString();
                     txtNombreEnvio.Text = orden.NombreEnvio;
                     txtDireccion.Text = orden.DireccionEnvio;
@@ -184,28 +199,41 @@ namespace EC3.Presentacion
                     FechaEnvio = dtpFechaEnvio.Value,
                     FechaOrden = dtpFechaOrden.Value,
                     FechaRequerida = dtpFechaRequerida.Value,
-                    EnvioPedido = Convert.ToInt32(txtEnvioPedido.Text),
+                    EnvioPedido = Convert.ToInt32(cmbPedido.SelectedValue),
                     Flete = Convert.ToDecimal(txtFlete.Text),
                     NombreEnvio = txtNombreEnvio.Text,
                     DireccionEnvio = txtDireccion.Text,
                     CiudadEnvio = txtCuidad.Text,
                     RegionEnvio = txtRegion.Text,
                     CodigoPostalEnvio = txtCodigoPostal.Text,
-                    PaisEnvio = txtPais.Text
+                    PaisEnvio = txtPais.Text,
+                    OrdenId = Convert.ToInt32(txtBuscar.Text)
                 };
 
                 Ordenes.actualizarOrden(orden);
                 MessageBox.Show("Registro actualizado con éxito.", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 this.EstadoTexto(false);
+                this.LimpiaTexto();
+                this.EstadoBotones(false);
+                this.Listado_Ordenes();
+
             }
             catch (FormatException ex) {
                 MessageBox.Show("Error: " + ex.Message, "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (SqlException ex) {
+                if (ex.Number == 547) {
+                    MessageBox.Show("Error: No se encontró el registro de la orden.", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                } else {
+                    MessageBox.Show("Error al actualizar el registro: " + ex.Message, "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             catch (Exception ex) {
                 MessageBox.Show("Error al actualizar el registro: " + ex.Message, "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         private void btnEliminar_Click(object sender, EventArgs e) {
             try {

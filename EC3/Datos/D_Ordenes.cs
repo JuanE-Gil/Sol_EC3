@@ -6,7 +6,7 @@ using EC3.Entidades;
 
 namespace EC3.Datos
 {
-    internal class D_Ordenes
+    public class D_Ordenes
     {
         public DataTable ListadoOrdenes() {
             SqlDataReader resultado;
@@ -14,7 +14,12 @@ namespace EC3.Datos
             SqlConnection sqlCon = new SqlConnection();
             try {
                 sqlCon = Conexion.getInstancia().CrearConexion();
-                SqlCommand comando = new SqlCommand("SELECT * FROM Orders", sqlCon);
+                SqlCommand comando = new SqlCommand("SELECT Orders.OrderID,Orders.CustomerID, Orders.EmployeeID, Orders.OrderDate, Orders.RequiredDate, Orders.ShippedDate," +
+                                                    "Shippers.CompanyName AS Shipper, Orders.Freight, Orders.ShipName, Orders.ShipAddress, Orders.ShipCity," +
+                                                    "Orders.ShipRegion, Orders.ShipPostalCode, Orders.ShipCountry " +
+                                                    "FROM Orders " +
+                                                    "INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID " +
+                                                    "INNER JOIN Shippers ON Orders.ShipVia = Shippers.ShipperID", sqlCon);
                 sqlCon.Open();
                 resultado = comando.ExecuteReader();
                 tabla.Load(resultado);
@@ -91,7 +96,8 @@ namespace EC3.Datos
             return orden;
         }
 
-        public void actualizarOrden(E_Ordenes orden) {
+        public bool actualizarOrden(E_Ordenes orden) {
+            bool actualizado = false;
             using (SqlConnection SqlCon = Conexion.getInstancia().CrearConexion()) {
                 SqlCon.Open();
                 string query = "SELECT COUNT(*) FROM Orders WHERE OrderID = @OrderID";
@@ -102,7 +108,7 @@ namespace EC3.Datos
                     int count = (int)command.ExecuteScalar();
 
                     if (count == 0) {
-                        throw new Exception("No se encontró el registro de la orden.");
+                        return false;
                     }
                 }
 
@@ -140,13 +146,13 @@ namespace EC3.Datos
 
                     int rows = command.ExecuteNonQuery();
 
-                    if (rows != 1) {
-                        throw new Exception("Error al actualizar orden");
+                    if (rows == 1) {
+                        actualizado = true;
                     }
                 }
             }
+            return actualizado;
         }
-
 
         public void EliminarOrden(int orderID) {
             using (SqlConnection SqlCon = Conexion.getInstancia().CrearConexion()) {

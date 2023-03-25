@@ -51,7 +51,9 @@
   <ItemGroup>
     <Compile Include="Datos\Conexion.cs" />
     <Compile Include="Datos\D_Ordenes.cs" />
+    <Compile Include="Datos\D_Shippers.cs" />
     <Compile Include="Entidades\E_Ordenes.cs" />
+    <Compile Include="Entidades\E_Shipper.cs" />
     <Compile Include="Presentacion\Frm_ordenes.cs">
       <SubType>Form</SubType>
     </Compile>

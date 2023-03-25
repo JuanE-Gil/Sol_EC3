@@ -54,7 +54,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.dtpFechaEnvio = new System.Windows.Forms.DateTimePicker();
             this.label6 = new System.Windows.Forms.Label();
-            this.txtEnvioPedido = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.txtFlete = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
@@ -70,6 +69,7 @@
             this.label18 = new System.Windows.Forms.Label();
             this.txtPais = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
+            this.cmbPedido = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListado)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -360,7 +360,7 @@
             this.dtpFechaEnvio.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpFechaEnvio.Location = new System.Drawing.Point(372, 126);
             this.dtpFechaEnvio.Name = "dtpFechaEnvio";
-            this.dtpFechaEnvio.Size = new System.Drawing.Size(113, 20);
+            this.dtpFechaEnvio.Size = new System.Drawing.Size(133, 20);
             this.dtpFechaEnvio.TabIndex = 54;
             // 
             // label6
@@ -372,16 +372,6 @@
             this.label6.Size = new System.Drawing.Size(90, 17);
             this.label6.TabIndex = 53;
             this.label6.Text = "Fecha Envio:";
-            // 
-            // txtEnvioPedido
-            // 
-            this.txtEnvioPedido.Enabled = false;
-            this.txtEnvioPedido.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtEnvioPedido.Location = new System.Drawing.Point(372, 163);
-            this.txtEnvioPedido.MaxLength = 80;
-            this.txtEnvioPedido.Name = "txtEnvioPedido";
-            this.txtEnvioPedido.Size = new System.Drawing.Size(113, 23);
-            this.txtEnvioPedido.TabIndex = 56;
             // 
             // label10
             // 
@@ -397,10 +387,10 @@
             // 
             this.txtFlete.Enabled = false;
             this.txtFlete.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFlete.Location = new System.Drawing.Point(372, 202);
+            this.txtFlete.Location = new System.Drawing.Point(372, 199);
             this.txtFlete.MaxLength = 80;
             this.txtFlete.Name = "txtFlete";
-            this.txtFlete.Size = new System.Drawing.Size(113, 23);
+            this.txtFlete.Size = new System.Drawing.Size(133, 23);
             this.txtFlete.TabIndex = 58;
             // 
             // label13
@@ -417,10 +407,10 @@
             // 
             this.txtNombreEnvio.Enabled = false;
             this.txtNombreEnvio.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNombreEnvio.Location = new System.Drawing.Point(372, 239);
+            this.txtNombreEnvio.Location = new System.Drawing.Point(372, 238);
             this.txtNombreEnvio.MaxLength = 80;
             this.txtNombreEnvio.Name = "txtNombreEnvio";
-            this.txtNombreEnvio.Size = new System.Drawing.Size(113, 23);
+            this.txtNombreEnvio.Size = new System.Drawing.Size(133, 23);
             this.txtNombreEnvio.TabIndex = 60;
             // 
             // label14
@@ -437,7 +427,7 @@
             // 
             this.txtRegion.Enabled = false;
             this.txtRegion.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtRegion.Location = new System.Drawing.Point(607, 199);
+            this.txtRegion.Location = new System.Drawing.Point(619, 199);
             this.txtRegion.MaxLength = 80;
             this.txtRegion.Name = "txtRegion";
             this.txtRegion.Size = new System.Drawing.Size(113, 23);
@@ -447,7 +437,7 @@
             // 
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(511, 202);
+            this.label15.Location = new System.Drawing.Point(523, 202);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(57, 17);
             this.label15.TabIndex = 65;
@@ -457,7 +447,7 @@
             // 
             this.txtCuidad.Enabled = false;
             this.txtCuidad.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCuidad.Location = new System.Drawing.Point(607, 160);
+            this.txtCuidad.Location = new System.Drawing.Point(619, 160);
             this.txtCuidad.MaxLength = 80;
             this.txtCuidad.Name = "txtCuidad";
             this.txtCuidad.Size = new System.Drawing.Size(113, 23);
@@ -467,7 +457,7 @@
             // 
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(511, 168);
+            this.label16.Location = new System.Drawing.Point(523, 168);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(60, 17);
             this.label16.TabIndex = 63;
@@ -477,7 +467,7 @@
             // 
             this.txtDireccion.Enabled = false;
             this.txtDireccion.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDireccion.Location = new System.Drawing.Point(607, 123);
+            this.txtDireccion.Location = new System.Drawing.Point(619, 123);
             this.txtDireccion.MaxLength = 80;
             this.txtDireccion.Name = "txtDireccion";
             this.txtDireccion.Size = new System.Drawing.Size(113, 23);
@@ -487,7 +477,7 @@
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(511, 126);
+            this.label17.Location = new System.Drawing.Point(523, 126);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(71, 17);
             this.label17.TabIndex = 61;
@@ -497,7 +487,7 @@
             // 
             this.txtCodigoPostal.Enabled = false;
             this.txtCodigoPostal.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCodigoPostal.Location = new System.Drawing.Point(607, 236);
+            this.txtCodigoPostal.Location = new System.Drawing.Point(619, 236);
             this.txtCodigoPostal.MaxLength = 80;
             this.txtCodigoPostal.Name = "txtCodigoPostal";
             this.txtCodigoPostal.Size = new System.Drawing.Size(113, 23);
@@ -507,7 +497,7 @@
             // 
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.Location = new System.Drawing.Point(508, 239);
+            this.label18.Location = new System.Drawing.Point(520, 239);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(99, 17);
             this.label18.TabIndex = 67;
@@ -517,7 +507,7 @@
             // 
             this.txtPais.Enabled = false;
             this.txtPais.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPais.Location = new System.Drawing.Point(787, 118);
+            this.txtPais.Location = new System.Drawing.Point(796, 112);
             this.txtPais.MaxLength = 80;
             this.txtPais.Name = "txtPais";
             this.txtPais.Size = new System.Drawing.Size(113, 23);
@@ -527,17 +517,28 @@
             // 
             this.label19.AutoSize = true;
             this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.Location = new System.Drawing.Point(738, 121);
+            this.label19.Location = new System.Drawing.Point(747, 115);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(39, 17);
             this.label19.TabIndex = 69;
             this.label19.Text = "Pais:";
+            // 
+            // cmbPedido
+            // 
+            this.cmbPedido.Enabled = false;
+            this.cmbPedido.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbPedido.FormattingEnabled = true;
+            this.cmbPedido.Location = new System.Drawing.Point(372, 162);
+            this.cmbPedido.Name = "cmbPedido";
+            this.cmbPedido.Size = new System.Drawing.Size(133, 24);
+            this.cmbPedido.TabIndex = 71;
             // 
             // Frm_ordenes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1114, 534);
+            this.Controls.Add(this.cmbPedido);
             this.Controls.Add(this.txtPais);
             this.Controls.Add(this.label19);
             this.Controls.Add(this.txtCodigoPostal);
@@ -552,7 +553,6 @@
             this.Controls.Add(this.label14);
             this.Controls.Add(this.txtFlete);
             this.Controls.Add(this.label13);
-            this.Controls.Add(this.txtEnvioPedido);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.dtpFechaEnvio);
             this.Controls.Add(this.label6);
@@ -619,7 +619,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DateTimePicker dtpFechaEnvio;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox txtEnvioPedido;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox txtFlete;
         private System.Windows.Forms.Label label13;
@@ -635,5 +634,6 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox txtPais;
         private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.ComboBox cmbPedido;
     }
 }
