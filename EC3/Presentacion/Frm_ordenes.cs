@@ -67,7 +67,7 @@ namespace EC3.Presentacion
                 dgvListado.Columns[6].HeaderText = "Envio Pedido";
                 dgvListado.Columns[6].Width = 100;
                 dgvListado.Columns[7].HeaderText = "Flete";
-                dgvListado.Columns[7].Width = 50;
+                dgvListado.Columns[7].Width = 75;
                 dgvListado.Columns[8].HeaderText = "Nombre Envio";
                 dgvListado.Columns[8].Width = 100;
                 dgvListado.Columns[9].HeaderText = "Direccion Envio";
@@ -215,7 +215,7 @@ namespace EC3.Presentacion
 
                 this.EstadoTexto(false);
                 this.LimpiaTexto();
-                this.EstadoBotones(false);
+                this.EstadoBotones(true);
                 this.Listado_Ordenes();
 
             }
