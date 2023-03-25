@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Windows.Forms;
 
 using EC3.Datos;
 using EC3.Entidades;
+
+using Newtonsoft.Json;
 
 namespace EC3.Presentacion
 {
@@ -15,6 +18,17 @@ namespace EC3.Presentacion
 
         private D_Shippers Shippers = new D_Shippers(); // Instancia de la clase D_Shippers
         private int ShipperId; // Variable para guardar el ShipperID seleccionado
+
+
+        // Leer el archivo JSON en una cadena
+        string jsonText = File.ReadAllText("data.json");
+
+        // Deserializar la cadena JSON en un diccionario
+        Dictionary<string, List<string>> paises = JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(jsonText);
+
+        // Agregar los países al ComboBox
+        cmbPaises.Items.AddRange(paises.Keys.ToArray());
+
 
         public Frm_ordenes() {
             InitializeComponent();
@@ -244,6 +258,9 @@ namespace EC3.Presentacion
                 if (result == DialogResult.Yes) {
                     Ordenes.EliminarOrden(orderID);
                     MessageBox.Show("Orden eliminada exitosamente.", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.EstadoTexto(false);
+                    this.LimpiaTexto();
+                    this.EstadoBotones(true);
                     this.Listado_Ordenes();
                 }
             }

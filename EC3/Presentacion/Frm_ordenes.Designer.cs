@@ -67,9 +67,9 @@
             this.label17 = new System.Windows.Forms.Label();
             this.txtCodigoPostal = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
-            this.txtPais = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
             this.cmbPedido = new System.Windows.Forms.ComboBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListado)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -159,7 +159,7 @@
             this.dgvListado.AllowUserToOrderColumns = true;
             this.dgvListado.ColumnHeadersHeight = 35;
             this.dgvListado.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.dgvListado.Location = new System.Drawing.Point(0, 327);
+            this.dgvListado.Location = new System.Drawing.Point(8, 327);
             this.dgvListado.Name = "dgvListado";
             this.dgvListado.ReadOnly = true;
             this.dgvListado.Size = new System.Drawing.Size(920, 195);
@@ -503,21 +503,11 @@
             this.label18.TabIndex = 67;
             this.label18.Text = "Codigo Postal:";
             // 
-            // txtPais
-            // 
-            this.txtPais.Enabled = false;
-            this.txtPais.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPais.Location = new System.Drawing.Point(796, 112);
-            this.txtPais.MaxLength = 80;
-            this.txtPais.Name = "txtPais";
-            this.txtPais.Size = new System.Drawing.Size(113, 23);
-            this.txtPais.TabIndex = 70;
-            // 
             // label19
             // 
             this.label19.AutoSize = true;
             this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.Location = new System.Drawing.Point(747, 115);
+            this.label19.Location = new System.Drawing.Point(750, 125);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(39, 17);
             this.label19.TabIndex = 69;
@@ -533,13 +523,23 @@
             this.cmbPedido.Size = new System.Drawing.Size(133, 24);
             this.cmbPedido.TabIndex = 71;
             // 
+            // comboBox1
+            // 
+            this.comboBox1.Enabled = false;
+            this.comboBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(795, 118);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(133, 24);
+            this.comboBox1.TabIndex = 72;
+            // 
             // Frm_ordenes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1114, 534);
+            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.cmbPedido);
-            this.Controls.Add(this.txtPais);
             this.Controls.Add(this.label19);
             this.Controls.Add(this.txtCodigoPostal);
             this.Controls.Add(this.label18);
@@ -632,8 +632,8 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.TextBox txtCodigoPostal;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.TextBox txtPais;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.ComboBox cmbPedido;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }
