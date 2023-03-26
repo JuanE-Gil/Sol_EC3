@@ -1,0 +1,16 @@
+﻿{
+  "paises": [
+    {
+      "nombre": "Argentina",
+      "ciudades": [ "Buenos Aires", "Córdoba", "Rosario" ]
+    },
+    {
+      "nombre": "Chile",
+      "ciudades": [ "Santiago", "Valparaíso", "Concepción" ]
+    },
+    {
+      "nombre": "Perú",
+      "ciudades": [ "Lima", "Arequipa", "Cusco" ]
+    }
+  ]
+}

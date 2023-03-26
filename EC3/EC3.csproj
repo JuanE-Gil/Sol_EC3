@@ -56,7 +56,9 @@
     <Compile Include="Datos\D_Ordenes.cs" />
     <Compile Include="Datos\D_Shippers.cs" />
     <Compile Include="Entidades\E_Ordenes.cs" />
+    <Compile Include="Entidades\Paises.cs" />
     <Compile Include="Entidades\E_Shipper.cs" />
+    <Compile Include="Entidades\PaisesJson.cs" />
     <Compile Include="Presentacion\Frm_ordenes.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -77,6 +79,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="Datos\paises.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -19,19 +19,27 @@ namespace EC3.Presentacion
         private D_Shippers Shippers = new D_Shippers(); // Instancia de la clase D_Shippers
         private int ShipperId; // Variable para guardar el ShipperID seleccionado
 
-
-        // Leer el archivo JSON en una cadena
-        string jsonText = File.ReadAllText("data.json");
-
-        // Deserializar la cadena JSON en un diccionario
-        Dictionary<string, List<string>> paises = JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(jsonText);
-
-        // Agregar los países al ComboBox
-        cmbPaises.Items.AddRange(paises.Keys.ToArray());
-
+        private List<Pais> paises;
 
         public Frm_ordenes() {
             InitializeComponent();
+            CargarPaises();
+
+        }
+
+        private void CargarPaises() {
+            try {
+                // Leer el archivo JSON
+                var json = File.ReadAllText(@"Datos\paises.json");
+                var paises = JsonConvert.DeserializeObject<Paises>(json);
+
+                foreach (var pais in paises.paises) {
+                    cmbPaises.Items.Add(pais.Nombre);
+                }
+            }
+            catch (Exception ex) {
+                MessageBox.Show("Error al cargar los países: " + ex.Message);
+            }
         }
 
         private void EstadoBotones(bool LEstado) {
@@ -61,7 +69,8 @@ namespace EC3.Presentacion
         }
 
         private void Frm_ordenes_Load(object sender, System.EventArgs e) {
-            this.Listado_Ordenes();
+
+
         }
 
         private void FormatoLista() {
@@ -114,10 +123,10 @@ namespace EC3.Presentacion
             Decimal Flete = Convert.ToDecimal(txtFlete.Text);
             string NombreEnvio = txtNombreEnvio.Text;
             string DireccionEnvio = txtDireccion.Text;
-            string CiudadEnvio = txtCuidad.Text;
+            string CiudadEnvio = cmbCiudades.SelectedValue.ToString();
             string RegionEnvio = txtRegion.Text;
             string CodigoPostalEnvio = txtCodigoPostal.Text;
-            string PaisEnvio = txtPais.Text;
+            string PaisEnvio = cmbPaises.SelectedValue.ToString();
 
             E_Ordenes orden = new E_Ordenes(ClienteId, EmpleadoId, FechaOrden, FechaRequerida, FechaEnvio, ShipperId, Flete, NombreEnvio, DireccionEnvio, CiudadEnvio, RegionEnvio, CodigoPostalEnvio, PaisEnvio);
 
@@ -138,14 +147,11 @@ namespace EC3.Presentacion
         private void LimpiaTexto() {
             txtClienteId.Text = "";
             txtEmpleadoId.Text = "";
-            cmbPedido.SelectedIndex = 0;
             txtFlete.Text = "";
             txtNombreEnvio.Text = "";
             txtDireccion.Text = "";
-            txtCuidad.Text = "";
             txtRegion.Text = "";
             txtCodigoPostal.Text = "";
-            txtPais.Text = "";
         }
 
         private void EstadoTexto(bool lEstado) {
@@ -155,10 +161,10 @@ namespace EC3.Presentacion
             txtFlete.Enabled = lEstado;
             txtNombreEnvio.Enabled = lEstado;
             txtDireccion.Enabled = lEstado;
-            txtCuidad.Enabled = lEstado;
+            cmbCiudades.Enabled = lEstado;
             txtRegion.Enabled = lEstado;
             txtCodigoPostal.Enabled = lEstado;
-            txtPais.Enabled = lEstado;
+            cmbPaises.Enabled = lEstado;
             dtpFechaEnvio.Enabled = lEstado;
             dtpFechaRequerida.Enabled = lEstado;
             dtpFechaOrden.Enabled = lEstado;
@@ -184,11 +190,11 @@ namespace EC3.Presentacion
                     txtFlete.Text = orden.Flete.ToString();
                     txtNombreEnvio.Text = orden.NombreEnvio;
                     txtDireccion.Text = orden.DireccionEnvio;
-                    txtCuidad.Text = orden.CiudadEnvio;
+                    cmbCiudades.Text = orden.CiudadEnvio;
                     txtDireccion.Text = orden.DireccionEnvio;
                     txtRegion.Text = orden.RegionEnvio;
                     txtCodigoPostal.Text = orden.CodigoPostalEnvio;
-                    txtPais.Text = orden.PaisEnvio;
+                    cmbPaises.Text = orden.PaisEnvio;
 
                     this.EstadoTexto(true);
                 }
@@ -217,10 +223,10 @@ namespace EC3.Presentacion
                     Flete = Convert.ToDecimal(txtFlete.Text),
                     NombreEnvio = txtNombreEnvio.Text,
                     DireccionEnvio = txtDireccion.Text,
-                    CiudadEnvio = txtCuidad.Text,
+                    CiudadEnvio = cmbCiudades.SelectedValue.ToString(),
                     RegionEnvio = txtRegion.Text,
                     CodigoPostalEnvio = txtCodigoPostal.Text,
-                    PaisEnvio = txtPais.Text,
+                    PaisEnvio = cmbPaises.SelectedValue.ToString(),
                     OrdenId = Convert.ToInt32(txtBuscar.Text)
                 };
 
@@ -272,5 +278,10 @@ namespace EC3.Presentacion
             }
         }
 
+
+
+        private void cmbPaises_SelectedIndexChanged(object sender, EventArgs e) {
+
+        }
     }
 }

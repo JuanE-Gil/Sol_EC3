@@ -61,7 +61,6 @@
             this.label14 = new System.Windows.Forms.Label();
             this.txtRegion = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
-            this.txtCuidad = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.txtDireccion = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
@@ -69,7 +68,8 @@
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.cmbPedido = new System.Windows.Forms.ComboBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cmbPaises = new System.Windows.Forms.ComboBox();
+            this.cmbCiudades = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListado)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -443,16 +443,6 @@
             this.label15.TabIndex = 65;
             this.label15.Text = "Region:";
             // 
-            // txtCuidad
-            // 
-            this.txtCuidad.Enabled = false;
-            this.txtCuidad.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCuidad.Location = new System.Drawing.Point(619, 160);
-            this.txtCuidad.MaxLength = 80;
-            this.txtCuidad.Name = "txtCuidad";
-            this.txtCuidad.Size = new System.Drawing.Size(113, 23);
-            this.txtCuidad.TabIndex = 64;
-            // 
             // label16
             // 
             this.label16.AutoSize = true;
@@ -523,29 +513,40 @@
             this.cmbPedido.Size = new System.Drawing.Size(133, 24);
             this.cmbPedido.TabIndex = 71;
             // 
-            // comboBox1
+            // cmbPaises
             // 
-            this.comboBox1.Enabled = false;
-            this.comboBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(795, 118);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(133, 24);
-            this.comboBox1.TabIndex = 72;
+            this.cmbPaises.Enabled = false;
+            this.cmbPaises.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbPaises.FormattingEnabled = true;
+            this.cmbPaises.Location = new System.Drawing.Point(787, 122);
+            this.cmbPaises.Name = "cmbPaises";
+            this.cmbPaises.Size = new System.Drawing.Size(113, 24);
+            this.cmbPaises.TabIndex = 72;
+            this.cmbPaises.SelectedIndexChanged += new System.EventHandler(this.cmbPaises_SelectedIndexChanged);
+            // 
+            // cmbCiudades
+            // 
+            this.cmbCiudades.Enabled = false;
+            this.cmbCiudades.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbCiudades.FormattingEnabled = true;
+            this.cmbCiudades.Location = new System.Drawing.Point(619, 163);
+            this.cmbCiudades.Name = "cmbCiudades";
+            this.cmbCiudades.Size = new System.Drawing.Size(113, 24);
+            this.cmbCiudades.TabIndex = 73;
             // 
             // Frm_ordenes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1114, 534);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.cmbCiudades);
+            this.Controls.Add(this.cmbPaises);
             this.Controls.Add(this.cmbPedido);
             this.Controls.Add(this.label19);
             this.Controls.Add(this.txtCodigoPostal);
             this.Controls.Add(this.label18);
             this.Controls.Add(this.txtRegion);
             this.Controls.Add(this.label15);
-            this.Controls.Add(this.txtCuidad);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.txtDireccion);
             this.Controls.Add(this.label17);
@@ -626,7 +627,6 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox txtRegion;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.TextBox txtCuidad;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.TextBox txtDireccion;
         private System.Windows.Forms.Label label17;
@@ -634,6 +634,7 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.ComboBox cmbPedido;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cmbPaises;
+        private System.Windows.Forms.ComboBox cmbCiudades;
     }
 }
