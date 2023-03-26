@@ -447,7 +447,7 @@
             // 
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(523, 168);
+            this.label16.Location = new System.Drawing.Point(748, 125);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(60, 17);
             this.label16.TabIndex = 63;
@@ -497,7 +497,7 @@
             // 
             this.label19.AutoSize = true;
             this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.Location = new System.Drawing.Point(750, 125);
+            this.label19.Location = new System.Drawing.Point(523, 160);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(39, 17);
             this.label19.TabIndex = 69;
@@ -515,10 +515,11 @@
             // 
             // cmbPaises
             // 
+            this.cmbPaises.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbPaises.Enabled = false;
             this.cmbPaises.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbPaises.FormattingEnabled = true;
-            this.cmbPaises.Location = new System.Drawing.Point(787, 122);
+            this.cmbPaises.Location = new System.Drawing.Point(619, 157);
             this.cmbPaises.Name = "cmbPaises";
             this.cmbPaises.Size = new System.Drawing.Size(113, 24);
             this.cmbPaises.TabIndex = 72;
@@ -526,10 +527,11 @@
             // 
             // cmbCiudades
             // 
+            this.cmbCiudades.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCiudades.Enabled = false;
             this.cmbCiudades.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCiudades.FormattingEnabled = true;
-            this.cmbCiudades.Location = new System.Drawing.Point(619, 163);
+            this.cmbCiudades.Location = new System.Drawing.Point(815, 122);
             this.cmbCiudades.Name = "cmbCiudades";
             this.cmbCiudades.Size = new System.Drawing.Size(113, 24);
             this.cmbCiudades.TabIndex = 73;

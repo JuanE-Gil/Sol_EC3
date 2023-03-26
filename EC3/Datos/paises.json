@@ -38,11 +38,33 @@
     },
     {
       "nombre": "France",
-      "ciudades": [ "Lille", "Lyon", "Marseille", "Nantes", "Paris", "Reims", "Strasbourg", "Toulouse", "Versailles" ]
+      "ciudades": [
+        "Lille",
+        "Lyon",
+        "Marseille",
+        "Nantes",
+        "Paris",
+        "Reims",
+        "Strasbourg",
+        "Toulouse",
+        "Versailles"
+      ]
     },
     {
       "nombre": "Germany",
-      "ciudades": [ "Aachen", "Berlin", "Brandenburg", "Cunewalde", "Frankfurt a.M.", "Köln", "Leipzig", "Mannheim", "München", "Münster", "Stuttgart" ]
+      "ciudades": [
+        "Aachen",
+        "Berlin",
+        "Brandenburg",
+        "Cunewalde",
+        "Frankfurt a.M.",
+        "Köln",
+        "Leipzig",
+        "Mannheim",
+        "München",
+        "Münster",
+        "Stuttgart"
+      ]
     },
     {
       "nombre": "Ireland",

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 using EC3.Datos;
@@ -19,7 +20,8 @@ namespace EC3.Presentacion
         private D_Shippers Shippers = new D_Shippers(); // Instancia de la clase D_Shippers
         private int ShipperId; // Variable para guardar el ShipperID seleccionado
 
-        private List<Pais> paises;
+        // Declarar un diccionario para almacenar los países y sus ciudades
+        Dictionary<string, List<string>> paises = new Dictionary<string, List<string>>();
 
         public Frm_ordenes() {
             InitializeComponent();
@@ -29,13 +31,22 @@ namespace EC3.Presentacion
 
         private void CargarPaises() {
             try {
+
+
+
                 // Leer el archivo JSON
                 var json = File.ReadAllText(@"Datos\paises.json");
-                var paises = JsonConvert.DeserializeObject<Paises>(json);
 
-                foreach (var pais in paises.paises) {
-                    cmbPaises.Items.Add(pais.Nombre);
+                dynamic data = JsonConvert.DeserializeObject(json);
+
+                foreach (var pais in data.paises) {
+                    string nombrePais = pais.nombre;
+                    List<string> ciudades = pais.ciudades.ToObject<List<string>>();
+                    paises.Add(nombrePais, ciudades);
                 }
+
+                // Agregar las llaves del diccionario al ComboBox de países
+                cmbPaises.Items.AddRange(paises.Keys.ToArray());
             }
             catch (Exception ex) {
                 MessageBox.Show("Error al cargar los países: " + ex.Message);
@@ -69,7 +80,7 @@ namespace EC3.Presentacion
         }
 
         private void Frm_ordenes_Load(object sender, System.EventArgs e) {
-
+            this.Listado_Ordenes();
 
         }
 
@@ -114,29 +125,33 @@ namespace EC3.Presentacion
         }
 
         private void btnGuadar_Click(object sender, EventArgs e) {
-            string ClienteId = txtClienteId.Text;
-            int EmpleadoId = Convert.ToInt32(txtEmpleadoId.Text);
-            DateTime FechaOrden = Convert.ToDateTime(dtpFechaOrden.Value);
-            DateTime FechaRequerida = Convert.ToDateTime(dtpFechaRequerida.Value);
-            DateTime FechaEnvio = Convert.ToDateTime(dtpFechaEnvio.Value);
-            int ShipperId = Convert.ToInt32(cmbPedido.SelectedValue);
-            Decimal Flete = Convert.ToDecimal(txtFlete.Text);
-            string NombreEnvio = txtNombreEnvio.Text;
-            string DireccionEnvio = txtDireccion.Text;
-            string CiudadEnvio = cmbCiudades.SelectedValue.ToString();
-            string RegionEnvio = txtRegion.Text;
-            string CodigoPostalEnvio = txtCodigoPostal.Text;
-            string PaisEnvio = cmbPaises.SelectedValue.ToString();
+            if (cmbCiudades.SelectedItem != null && cmbPaises.SelectedItem != null) {
+                string CiudadEnvio = cmbCiudades.SelectedItem.ToString();
+                string PaisEnvio = cmbPaises.SelectedItem.ToString();
+                string ClienteId = txtClienteId.Text;
+                int EmpleadoId = Convert.ToInt32(txtEmpleadoId.Text);
+                DateTime FechaOrden = Convert.ToDateTime(dtpFechaOrden.Value);
+                DateTime FechaRequerida = Convert.ToDateTime(dtpFechaRequerida.Value);
+                DateTime FechaEnvio = Convert.ToDateTime(dtpFechaEnvio.Value);
+                int ShipperId = Convert.ToInt32(cmbPedido.SelectedValue);
+                Decimal Flete = Convert.ToDecimal(txtFlete.Text);
+                string NombreEnvio = txtNombreEnvio.Text;
+                string DireccionEnvio = txtDireccion.Text;
+                string RegionEnvio = txtRegion.Text;
+                string CodigoPostalEnvio = txtCodigoPostal.Text;
 
-            E_Ordenes orden = new E_Ordenes(ClienteId, EmpleadoId, FechaOrden, FechaRequerida, FechaEnvio, ShipperId, Flete, NombreEnvio, DireccionEnvio, CiudadEnvio, RegionEnvio, CodigoPostalEnvio, PaisEnvio);
 
-            Ordenes.guardarOrden(orden);
-            this.Listado_Ordenes();
-            MessageBox.Show("!Nueva Orden registrada exitosamente", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            LimpiaTexto();
-            this.EstadoTexto(false);
-            this.EstadoBotones(true);
+                E_Ordenes orden = new E_Ordenes(ClienteId, EmpleadoId, FechaOrden, FechaRequerida, FechaEnvio, ShipperId, Flete, NombreEnvio, DireccionEnvio, CiudadEnvio, RegionEnvio, CodigoPostalEnvio, PaisEnvio);
+
+                Ordenes.guardarOrden(orden);
+                this.Listado_Ordenes();
+                MessageBox.Show("!Nueva Orden registrada exitosamente", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LimpiaTexto();
+                this.EstadoTexto(false);
+                this.EstadoBotones(true);
+            }
         }
+
 
         private void btnCancelar_Click(object sender, EventArgs e) {
             this.LimpiaTexto();
@@ -223,10 +238,10 @@ namespace EC3.Presentacion
                     Flete = Convert.ToDecimal(txtFlete.Text),
                     NombreEnvio = txtNombreEnvio.Text,
                     DireccionEnvio = txtDireccion.Text,
-                    CiudadEnvio = cmbCiudades.SelectedValue.ToString(),
+                    CiudadEnvio = cmbCiudades.SelectedItem.ToString(),
                     RegionEnvio = txtRegion.Text,
                     CodigoPostalEnvio = txtCodigoPostal.Text,
-                    PaisEnvio = cmbPaises.SelectedValue.ToString(),
+                    PaisEnvio = cmbPaises.SelectedItem.ToString(),
                     OrdenId = Convert.ToInt32(txtBuscar.Text)
                 };
 
@@ -278,7 +293,9 @@ namespace EC3.Presentacion
             }
         }
 
+        // Manejar el evento SelectedIndexChanged del ComboBox de países
         private void cmbPaises_SelectedIndexChanged(object sender, EventArgs e) {
+
             // Obtener la llave seleccionada (nombre del país)
             string pais = cmbPaises.SelectedItem.ToString();
 
