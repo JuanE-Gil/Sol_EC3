@@ -11,6 +11,104 @@
     {
       "nombre": "Perú",
       "ciudades": [ "Lima", "Arequipa", "Cusco" ]
+    },
+    {
+      "nombre": "Austria",
+      "ciudades": [ "Graz", "Salzburg" ]
+    },
+    {
+      "nombre": "Belgium",
+      "ciudades": [ "Bruxelles", "Charleroi" ]
+    },
+    {
+      "nombre": "Brazil",
+      "ciudades": [ "Campinas", "Resende", "Rio de Janeiro", "Sao Paulo" ]
+    },
+    {
+      "nombre": "Canada",
+      "ciudades": [ "Montréal", "Tsawassen", "Vancouver" ]
+    },
+    {
+      "nombre": "Denmark",
+      "ciudades": [ "Århus", "Kobenhavn" ]
+    },
+    {
+      "nombre": "Finland",
+      "ciudades": [ "Helsinki", "Oulu" ]
+    },
+    {
+      "nombre": "France",
+      "ciudades": [ "Lille", "Lyon", "Marseille", "Nantes", "Paris", "Reims", "Strasbourg", "Toulouse", "Versailles" ]
+    },
+    {
+      "nombre": "Germany",
+      "ciudades": [ "Aachen", "Berlin", "Brandenburg", "Cunewalde", "Frankfurt a.M.", "Köln", "Leipzig", "Mannheim", "München", "Münster", "Stuttgart" ]
+    },
+    {
+      "nombre": "Ireland",
+      "ciudades": [ "Cork" ]
+    },
+    {
+      "nombre": "Italy",
+      "ciudades": [ "Bergamo", "Reggio Emilia", "Torino" ]
+    },
+    {
+      "nombre": "Mexico",
+      "ciudades": [ "México D.F." ]
+    },
+    {
+      "nombre": "Norway",
+      "ciudades": [ "Stavern" ]
+    },
+    {
+      "nombre": "Poland",
+      "ciudades": [ "Warszawa" ]
+    },
+    {
+      "nombre": "Portugal",
+      "ciudades": [ "Lisboa" ]
+    },
+    {
+      "nombre": "Spain",
+      "ciudades": [ "Barcelona", "Madrid", "Sevilla" ]
+    },
+    {
+      "nombre": "Sweden",
+      "ciudades": [ "Bräcke", "Luleå" ]
+    },
+    {
+      "nombre": "Switzerland",
+      "ciudades": [ "Bern", "Genève" ]
+    },
+    {
+      "nombre": "UK",
+      "ciudades": [ "Colchester", "Cowes", "London" ]
+    },
+    {
+      "nombre": "USA",
+      "ciudades": [
+        "Albuquerque",
+        "Anchorage",
+        "Boise",
+        "Butte",
+        "Elgin",
+        "Eugene",
+        "Kirkland",
+        "Lander",
+        "Portland",
+        "San Francisco",
+        "Seattle",
+        "Walla Walla"
+      ]
+    },
+    {
+      "nombre": "Venezuela",
+      "ciudades": [
+        "Barquisimeto",
+        "Caracas",
+        "I. de Margarita",
+        "San Cristóbal"
+      ]
     }
   ]
 }

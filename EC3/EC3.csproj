@@ -58,7 +58,6 @@
     <Compile Include="Entidades\E_Ordenes.cs" />
     <Compile Include="Entidades\Paises.cs" />
     <Compile Include="Entidades\E_Shipper.cs" />
-    <Compile Include="Entidades\PaisesJson.cs" />
     <Compile Include="Presentacion\Frm_ordenes.cs">
       <SubType>Form</SubType>
     </Compile>

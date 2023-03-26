@@ -278,10 +278,17 @@ namespace EC3.Presentacion
             }
         }
 
-
-
         private void cmbPaises_SelectedIndexChanged(object sender, EventArgs e) {
+            // Obtener la llave seleccionada (nombre del país)
+            string pais = cmbPaises.SelectedItem.ToString();
 
+            // Buscar la lista de ciudades correspondiente en el diccionario
+            List<string> ciudades;
+            if (paises.TryGetValue(pais, out ciudades)) {
+                // Limpiar el ComboBox de ciudades y agregar las ciudades encontradas
+                cmbCiudades.Items.Clear();
+                cmbCiudades.Items.AddRange(ciudades.ToArray());
+            }
         }
     }
 }
