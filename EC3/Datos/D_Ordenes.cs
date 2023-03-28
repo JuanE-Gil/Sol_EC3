@@ -26,7 +26,7 @@ namespace EC3.Datos
                 return tabla;
             }
             catch (Exception ex) {
-                throw ex;
+                throw ex.InnerException;
             } finally {
                 if (sqlCon.State == ConnectionState.Open) sqlCon.Close();
             }

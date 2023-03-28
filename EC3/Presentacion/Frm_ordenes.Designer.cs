@@ -108,7 +108,7 @@
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Visible = false;
-            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            this.btnCancelar.Click += new System.EventHandler(this.BtnCancelar_Click);
             // 
             // btnGuadar
             // 
@@ -120,7 +120,7 @@
             this.btnGuadar.Text = "Guardar";
             this.btnGuadar.UseVisualStyleBackColor = true;
             this.btnGuadar.Visible = false;
-            this.btnGuadar.Click += new System.EventHandler(this.btnGuadar_Click);
+            this.btnGuadar.Click += new System.EventHandler(this.BtnGuadar_Click);
             // 
             // btnBuscar
             // 
@@ -131,7 +131,7 @@
             this.btnBuscar.TabIndex = 38;
             this.btnBuscar.Text = "Buscar";
             this.btnBuscar.UseVisualStyleBackColor = true;
-            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
+            this.btnBuscar.Click += new System.EventHandler(this.BtnBuscar_Click);
             // 
             // txtBuscar
             // 
@@ -164,6 +164,7 @@
             this.dgvListado.ReadOnly = true;
             this.dgvListado.Size = new System.Drawing.Size(920, 195);
             this.dgvListado.TabIndex = 35;
+            this.dgvListado.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvListado_CellDoubleClick);
             // 
             // panel2
             // 
@@ -213,45 +214,46 @@
             // btnSalir
             // 
             this.btnSalir.Font = new System.Drawing.Font("Microsoft YaHei UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSalir.Location = new System.Drawing.Point(17, 286);
+            this.btnSalir.Location = new System.Drawing.Point(17, 423);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Size = new System.Drawing.Size(151, 58);
             this.btnSalir.TabIndex = 21;
             this.btnSalir.Text = "Salir";
             this.btnSalir.UseVisualStyleBackColor = true;
+            this.btnSalir.Click += new System.EventHandler(this.BtnSalir_Click);
             // 
             // btnEliminar
             // 
             this.btnEliminar.Font = new System.Drawing.Font("Microsoft YaHei UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEliminar.Location = new System.Drawing.Point(17, 222);
+            this.btnEliminar.Location = new System.Drawing.Point(17, 305);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(151, 58);
             this.btnEliminar.TabIndex = 19;
             this.btnEliminar.Text = "Eliminar";
             this.btnEliminar.UseVisualStyleBackColor = true;
-            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
+            this.btnEliminar.Click += new System.EventHandler(this.BtnEliminar_Click);
             // 
             // btnActualizar
             // 
             this.btnActualizar.Font = new System.Drawing.Font("Microsoft YaHei UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnActualizar.Location = new System.Drawing.Point(17, 157);
+            this.btnActualizar.Location = new System.Drawing.Point(17, 187);
             this.btnActualizar.Name = "btnActualizar";
             this.btnActualizar.Size = new System.Drawing.Size(151, 58);
             this.btnActualizar.TabIndex = 18;
             this.btnActualizar.Text = "Actualizar";
             this.btnActualizar.UseVisualStyleBackColor = true;
-            this.btnActualizar.Click += new System.EventHandler(this.btnActualizar_Click);
+            this.btnActualizar.Click += new System.EventHandler(this.BtnActualizar_Click);
             // 
             // btnNuevo
             // 
             this.btnNuevo.Font = new System.Drawing.Font("Microsoft YaHei UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNuevo.Location = new System.Drawing.Point(17, 92);
+            this.btnNuevo.Location = new System.Drawing.Point(17, 69);
             this.btnNuevo.Name = "btnNuevo";
             this.btnNuevo.Size = new System.Drawing.Size(151, 58);
             this.btnNuevo.TabIndex = 17;
             this.btnNuevo.Text = "Nuevo";
             this.btnNuevo.UseVisualStyleBackColor = true;
-            this.btnNuevo.Click += new System.EventHandler(this.btnNuevo_Click);
+            this.btnNuevo.Click += new System.EventHandler(this.BtnNuevo_Click);
             // 
             // txtClienteId
             // 
@@ -523,7 +525,7 @@
             this.cmbPaises.Name = "cmbPaises";
             this.cmbPaises.Size = new System.Drawing.Size(113, 24);
             this.cmbPaises.TabIndex = 72;
-            this.cmbPaises.SelectedIndexChanged += new System.EventHandler(this.cmbPaises_SelectedIndexChanged);
+            this.cmbPaises.SelectedIndexChanged += new System.EventHandler(this.CmbPaises_SelectedIndexChanged);
             // 
             // cmbCiudades
             // 

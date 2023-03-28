@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -14,30 +13,33 @@ namespace EC3.Presentacion
 {
     public partial class Frm_ordenes : Form
     {
-        private D_Ordenes Ordenes = new D_Ordenes();
-        private int inputID = 0;
-
-        private D_Shippers Shippers = new D_Shippers(); // Instancia de la clase D_Shippers
-        private int ShipperId; // Variable para guardar el ShipperID seleccionado
+        // Atributos
+        private readonly D_Ordenes Ordenes = new D_Ordenes();
+        private int inputID;
 
         // Declarar un diccionario para almacenar los países y sus ciudades
-        Dictionary<string, List<string>> paises = new Dictionary<string, List<string>>();
+        readonly Dictionary<string, List<string>> paises = new Dictionary<string, List<string>>();
 
         public Frm_ordenes() {
             InitializeComponent();
-            CargarPaises();
+            CargarDatos();
+        }
 
+        private void CargarDatos() {
+            CargarPaises();
+            CargarListaOrdenes();
+            CargarListaShippers();
+            DefinirFormatoLista();
+            DefinirEstadoBotones(true);
+            DefinirEstadoCamposTexto(false);
         }
 
         private void CargarPaises() {
             try {
-
-
-
                 // Leer el archivo JSON
-                var json = File.ReadAllText(@"Datos\paises.json");
+                var Json = File.ReadAllText(@"Datos\paises.json");
 
-                dynamic data = JsonConvert.DeserializeObject(json);
+                dynamic data = JsonConvert.DeserializeObject(Json);
 
                 foreach (var pais in data.paises) {
                     string nombrePais = pais.nombre;
@@ -48,43 +50,37 @@ namespace EC3.Presentacion
                 // Agregar las llaves del diccionario al ComboBox de países
                 cmbPaises.Items.AddRange(paises.Keys.ToArray());
             }
-            catch (Exception ex) {
+            catch (JsonException ex) {
                 MessageBox.Show("Error al cargar los países: " + ex.Message);
             }
         }
 
-        private void EstadoBotones(bool LEstado) {
-            btnCancelar.Visible = !LEstado;
-            btnGuadar.Visible = !LEstado;
+        private void DefinirEstadoBotones(bool isHabilitado) {
+            btnCancelar.Visible = !isHabilitado;
+            btnGuadar.Visible = !isHabilitado;
 
-            btnNuevo.Enabled = LEstado;
-            btnActualizar.Enabled = LEstado;
-            btnEliminar.Enabled = LEstado;
-            btnSalir.Enabled = LEstado;
+            btnNuevo.Enabled = isHabilitado;
+            btnActualizar.Enabled = isHabilitado;
+            btnEliminar.Enabled = isHabilitado;
+            btnSalir.Enabled = isHabilitado;
 
-            btnBuscar.Enabled = LEstado;
-            txtBuscar.Enabled = LEstado;
-            dgvListado.Enabled = LEstado;
+            btnBuscar.Enabled = isHabilitado;
+            txtBuscar.Enabled = isHabilitado;
+            dgvListado.Enabled = isHabilitado;
         }
 
-        private void Listado_Ordenes() {
+        private void CargarListaOrdenes() {
+            dgvListado.DataSource = Ordenes.ListadoOrdenes();
+        }
 
-            // Llenar el ComboBox con los nombres de los shippers
-            List<E_Shipper> shippers = D_Shippers.ObtenerShippers();
-            cmbPedido.DataSource = shippers;
+        // Cargar la lista de shippers desde la base de datos y agregarla al ComboBox de shippers
+        private void CargarListaShippers() {
+            cmbPedido.DataSource = D_Shippers.ObtenerShippers();
             cmbPedido.DisplayMember = "CompanyName";
             cmbPedido.ValueMember = "ShipperID";
-
-            dgvListado.DataSource = Ordenes.ListadoOrdenes();
-            this.FormatoLista();
         }
 
-        private void Frm_ordenes_Load(object sender, System.EventArgs e) {
-            this.Listado_Ordenes();
-
-        }
-
-        private void FormatoLista() {
+        private void DefinirFormatoLista() {
             if (dgvListado.Columns.Count >= 14) {
                 dgvListado.Columns[0].HeaderText = "Orden Id";
                 dgvListado.Columns[0].Width = 75;
@@ -117,14 +113,17 @@ namespace EC3.Presentacion
             }
         }
 
-
-        private void btnNuevo_Click(object sender, System.EventArgs e) {
-            this.LimpiaTexto();
-            this.EstadoTexto(true);
-            this.EstadoBotones(false);
+        private void Frm_ordenes_Load(object sender, EventArgs e) {
+            CargarListaShippers();
         }
 
-        private void btnGuadar_Click(object sender, EventArgs e) {
+        private void BtnNuevo_Click(object sender, EventArgs e) {
+            LimpiaTexto();
+            DefinirEstadoCamposTexto(true);
+            DefinirEstadoBotones(false);
+        }
+
+        private void BtnGuadar_Click(object sender, EventArgs e) {
             if (cmbCiudades.SelectedItem != null && cmbPaises.SelectedItem != null) {
                 string CiudadEnvio = cmbCiudades.SelectedItem.ToString();
                 string PaisEnvio = cmbPaises.SelectedItem.ToString();
@@ -140,55 +139,84 @@ namespace EC3.Presentacion
                 string RegionEnvio = txtRegion.Text;
                 string CodigoPostalEnvio = txtCodigoPostal.Text;
 
-
                 E_Ordenes orden = new E_Ordenes(ClienteId, EmpleadoId, FechaOrden, FechaRequerida, FechaEnvio, ShipperId, Flete, NombreEnvio, DireccionEnvio, CiudadEnvio, RegionEnvio, CodigoPostalEnvio, PaisEnvio);
 
                 Ordenes.guardarOrden(orden);
-                this.Listado_Ordenes();
+                CargarDatos();
                 MessageBox.Show("!Nueva Orden registrada exitosamente", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LimpiaTexto();
-                this.EstadoTexto(false);
-                this.EstadoBotones(true);
+
             }
         }
 
-
-        private void btnCancelar_Click(object sender, EventArgs e) {
-            this.LimpiaTexto();
-            this.EstadoTexto(false);
-            this.EstadoBotones(true);
+        private void BtnCancelar_Click(object sender, EventArgs e) {
+            LimpiaTexto();
+            DefinirEstadoCamposTexto(false);
+            DefinirEstadoBotones(true);
         }
 
-        private void LimpiaTexto() {
-            txtClienteId.Text = "";
-            txtEmpleadoId.Text = "";
-            txtFlete.Text = "";
-            txtNombreEnvio.Text = "";
-            txtDireccion.Text = "";
-            txtRegion.Text = "";
-            txtCodigoPostal.Text = "";
+        private void BtnActualizar_Click(object sender, EventArgs e) {
+            if (inputID != 0 && cmbCiudades.SelectedItem != null && cmbPaises.SelectedItem != null) {
+                string CiudadEnvio = cmbCiudades.SelectedItem.ToString();
+                string PaisEnvio = cmbPaises.SelectedItem.ToString();
+                string ClienteId = txtClienteId.Text;
+                int EmpleadoId = Convert.ToInt32(txtEmpleadoId.Text);
+                DateTime FechaOrden = Convert.ToDateTime(dtpFechaOrden.Value);
+                DateTime FechaRequerida = Convert.ToDateTime(dtpFechaRequerida.Value);
+                DateTime FechaEnvio = Convert.ToDateTime(dtpFechaEnvio.Value);
+                int ShipperId = Convert.ToInt32(cmbPedido.SelectedValue);
+                decimal Flete = Convert.ToDecimal(txtFlete.Text);
+                string NombreEnvio = txtNombreEnvio.Text;
+                string DireccionEnvio = txtDireccion.Text;
+                string RegionEnvio = txtRegion.Text;
+                string CodigoPostalEnvio = txtCodigoPostal.Text;
+
+                E_Ordenes orden = new E_Ordenes(inputID, ClienteId, EmpleadoId, FechaOrden, FechaRequerida, FechaEnvio, ShipperId, Flete, NombreEnvio, DireccionEnvio, CiudadEnvio, RegionEnvio, CodigoPostalEnvio, PaisEnvio);
+
+                if (Ordenes.actualizarOrden(orden)) {
+                    MessageBox.Show("Orden actualizada correctamente.");
+                    CargarDatos();
+                    LimpiaTexto();
+
+                    inputID = 0;
+                } else {
+                    MessageBox.Show("Error al actualizar la orden.");
+                }
+            } else {
+                MessageBox.Show("Debe seleccionar un país y una ciudad de envío.");
+            }
+
         }
 
-        private void EstadoTexto(bool lEstado) {
-            txtClienteId.Enabled = lEstado;
-            txtEmpleadoId.Enabled = lEstado;
-            cmbPedido.Enabled = lEstado;
-            txtFlete.Enabled = lEstado;
-            txtNombreEnvio.Enabled = lEstado;
-            txtDireccion.Enabled = lEstado;
-            cmbCiudades.Enabled = lEstado;
-            txtRegion.Enabled = lEstado;
-            txtCodigoPostal.Enabled = lEstado;
-            cmbPaises.Enabled = lEstado;
-            dtpFechaEnvio.Enabled = lEstado;
-            dtpFechaRequerida.Enabled = lEstado;
-            dtpFechaOrden.Enabled = lEstado;
+        private void BtnEliminar_Click(object sender, EventArgs e) {
+            try {
+                int orderID = Convert.ToInt32(inputID);
+
+                DialogResult result = MessageBox.Show("¿Está seguro que desea eliminar la orden con ID " + orderID + "?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes) {
+                    Ordenes.EliminarOrden(orderID);
+                    MessageBox.Show("Orden eliminada exitosamente.", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    CargarDatos();
+                    LimpiaTexto();
+
+                }
+            }
+            catch (FormatException) {
+                MessageBox.Show("Por favor ingrese un número de orden válido.", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message, "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private void btnBuscar_Click(object sender, EventArgs e) {
+        private void BtnSalir_Click(object sender, EventArgs e) {
+            Close();
+        }
+
+        private void BtnBuscar_Click(object sender, EventArgs e) {
             try {
                 inputID = Convert.ToInt32(txtBuscar.Text);
-
 
                 E_Ordenes orden = Ordenes.BuscarPorId(inputID);
 
@@ -211,7 +239,7 @@ namespace EC3.Presentacion
                     txtCodigoPostal.Text = orden.CodigoPostalEnvio;
                     cmbPaises.Text = orden.PaisEnvio;
 
-                    this.EstadoTexto(true);
+                    DefinirEstadoCamposTexto(true);
                 }
             }
             catch (FormatException ex) {
@@ -222,86 +250,50 @@ namespace EC3.Presentacion
                 MessageBox.Show("Error... Fallo de Conexión!", "Mensaje",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
 
-        private void btnActualizar_Click(object sender, EventArgs e) {
-            try {
-                E_Ordenes orden = new E_Ordenes
-                {
-                    ClienteId = txtClienteId.Text,
-                    EmpleadoId = Convert.ToInt32(txtEmpleadoId.Text),
-                    FechaEnvio = dtpFechaEnvio.Value,
-                    FechaOrden = dtpFechaOrden.Value,
-                    FechaRequerida = dtpFechaRequerida.Value,
-                    EnvioPedido = Convert.ToInt32(cmbPedido.SelectedValue),
-                    Flete = Convert.ToDecimal(txtFlete.Text),
-                    NombreEnvio = txtNombreEnvio.Text,
-                    DireccionEnvio = txtDireccion.Text,
-                    CiudadEnvio = cmbCiudades.SelectedItem.ToString(),
-                    RegionEnvio = txtRegion.Text,
-                    CodigoPostalEnvio = txtCodigoPostal.Text,
-                    PaisEnvio = cmbPaises.SelectedItem.ToString(),
-                    OrdenId = Convert.ToInt32(txtBuscar.Text)
-                };
-
-                Ordenes.actualizarOrden(orden);
-                MessageBox.Show("Registro actualizado con éxito.", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                this.EstadoTexto(false);
-                this.LimpiaTexto();
-                this.EstadoBotones(true);
-                this.Listado_Ordenes();
-
-            }
-            catch (FormatException ex) {
-                MessageBox.Show("Error: " + ex.Message, "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (SqlException ex) {
-                if (ex.Number == 547) {
-                    MessageBox.Show("Error: No se encontró el registro de la orden.", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                } else {
-                    MessageBox.Show("Error al actualizar el registro: " + ex.Message, "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            catch (Exception ex) {
-                MessageBox.Show("Error al actualizar el registro: " + ex.Message, "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+        private void LimpiaTexto() {
+            txtClienteId.Text = "";
+            txtEmpleadoId.Text = "";
+            txtFlete.Text = "";
+            txtNombreEnvio.Text = "";
+            txtDireccion.Text = "";
+            txtRegion.Text = "";
+            txtCodigoPostal.Text = "";
         }
 
+        private void DefinirEstadoCamposTexto(bool isDeshabilitado) {
+            txtClienteId.Enabled = isDeshabilitado;
+            txtEmpleadoId.Enabled = isDeshabilitado;
+            cmbPedido.Enabled = isDeshabilitado;
+            txtFlete.Enabled = isDeshabilitado;
+            txtNombreEnvio.Enabled = isDeshabilitado;
+            txtDireccion.Enabled = isDeshabilitado;
+            cmbCiudades.Enabled = isDeshabilitado;
+            txtRegion.Enabled = isDeshabilitado;
+            txtCodigoPostal.Enabled = isDeshabilitado;
+            cmbPaises.Enabled = isDeshabilitado;
+            dtpFechaEnvio.Enabled = isDeshabilitado;
+            dtpFechaRequerida.Enabled = isDeshabilitado;
+            dtpFechaOrden.Enabled = isDeshabilitado;
+        }
 
-        private void btnEliminar_Click(object sender, EventArgs e) {
-            try {
-                int orderID = Convert.ToInt32(inputID);
+        private void DgvListado_CellDoubleClick(object sender, DataGridViewCellEventArgs e) {
+            int index = e.RowIndex;
 
-                DialogResult result = MessageBox.Show("¿Está seguro que desea eliminar la orden con ID " + orderID + "?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DataGridViewRow selectedRow = dgvListado.Rows[index];
 
-                if (result == DialogResult.Yes) {
-                    Ordenes.EliminarOrden(orderID);
-                    MessageBox.Show("Orden eliminada exitosamente.", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.EstadoTexto(false);
-                    this.LimpiaTexto();
-                    this.EstadoBotones(true);
-                    this.Listado_Ordenes();
-                }
-            }
-            catch (FormatException) {
-                MessageBox.Show("Por favor ingrese un número de orden válido.", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (Exception ex) {
-                MessageBox.Show(ex.Message, "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            inputID = Convert.ToInt32(selectedRow.Cells[0].Value);
+            txtBuscar.Text = inputID.ToString();
         }
 
         // Manejar el evento SelectedIndexChanged del ComboBox de países
-        private void cmbPaises_SelectedIndexChanged(object sender, EventArgs e) {
-
+        private void CmbPaises_SelectedIndexChanged(object sender, EventArgs e) {
             // Obtener la llave seleccionada (nombre del país)
             string pais = cmbPaises.SelectedItem.ToString();
 
             // Buscar la lista de ciudades correspondiente en el diccionario
-            List<string> ciudades;
-            if (paises.TryGetValue(pais, out ciudades)) {
+            if (paises.TryGetValue(pais, out List<string> ciudades)) {
                 // Limpiar el ComboBox de ciudades y agregar las ciudades encontradas
                 cmbCiudades.Items.Clear();
                 cmbCiudades.Items.AddRange(ciudades.ToArray());
